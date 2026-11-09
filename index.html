@@ -4,25 +4,24 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#10121c"><meta name="description" content="Демо ROX: полка, пересчёт, касса и контроль смены.">
   <title>ROX — бар под контролем</title>
-  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="rox.css"><link rel="stylesheet" href="shift.css">
+  <link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="rox.css"><link rel="stylesheet" href="shift.css"><link rel="stylesheet" href="simple.css">
 </head>
 <body>
   <div class="app">
-    <header class="topbar"><a class="brand" href="#" aria-label="ROX — главная"><span class="rox-wordmark">ROX<span>BAR / STOCK</span></span></a><div class="venue">УЛАН-УДЭ <span>•</span> ДЕМО</div><button class="avatar" id="role-button" aria-label="Сменить роль">Б</button></header>
-    <div class="demo-banner"><span class="demo-dot"></span>ROX · тестовые остатки, касса и выплаты <button id="about-button" aria-label="О демоверсии">?</button></div>
+    <header class="topbar"><a class="brand" href="#" aria-label="ROX — главная"><span class="rox-wordmark">ROX<span>BAR / STOCK</span></span></a><div class="venue">ДЕМО</div><button class="mode-button" id="role-button" aria-label="Сменить режим">Бармен</button></header>
     <main id="main" tabindex="-1"></main>
     <nav class="bottom-nav" aria-label="Основная навигация">
       <button data-view="shelf"><span class="nav-icon" aria-hidden="true">▥</span>Полка</button>
       <button data-view="shift"><span class="nav-icon" aria-hidden="true">◷</span>Смена</button>
       <button data-view="counts"><span class="nav-icon" aria-hidden="true">☷</span>Пересчёты</button>
       <button data-view="owner"><span class="nav-icon" aria-hidden="true">◈</span>Контроль<span id="nav-badge"></span></button>
-      <button data-view="media"><span class="nav-icon" aria-hidden="true">▶</span>Показ</button>
+      <button data-view="media"><span class="nav-icon" aria-hidden="true">?</span>Помощь</button>
     </nav>
-    <footer class="desktop-footer"><span>ROX · Коммунистическая, 43</span><span>ROX / ПРОТОТИП 03</span></footer>
+    <footer class="desktop-footer"><span>ROX · Коммунистическая, 43</span><span>ROX / ПРОТОТИП 04</span></footer>
   </div>
   <dialog id="sheet" aria-labelledby="sheet-title"></dialog>
   <dialog id="info-dialog" aria-labelledby="info-title"></dialog>
   <div id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js?v=3"></script>
+  <script type="module" src="app.js?v=4"></script>
 </body>
 </html>

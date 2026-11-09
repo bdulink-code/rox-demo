@@ -1,0 +1,106 @@
+/* A fixed game-like shelf with touch targets and a simple stock entry sheet. */
+:root { --gold: #ffd08c; --line: #34364f; }
+.topbar { height: 68px; gap: 10px; }
+.topbar .venue { margin-left: auto; letter-spacing: .14em; color: #ada9c1; font-size: .66rem; }
+.mode-button {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+  padding: 0 11px; color: #f2efff; border: 1px solid #5a527a; border-radius: 12px;
+  background: #252238; font-size: .81rem; font-weight: 700;
+}
+.mode-button::after { content: "⌄"; color: #d4c6ff; }
+.mode-list { display: grid; gap: 9px; margin-top: 15px; }
+.mode-list button {
+  display: grid; gap: 5px; text-align: left; width: 100%; padding: 13px 15px;
+  border: 1px solid #565079; border-radius: 12px; background: #26243e; color: #f4f1ff;
+}
+.mode-list button[aria-pressed=true] { border-color: #a69aff; background: #37305b; }
+.mode-list small { color: #d1cbe3; }
+.shelf-head { display: flex; align-items: end; justify-content: space-between; gap: 9px; margin: 17px 0 14px; }
+.shelf-head .eyebrow { margin: 0 0 5px; }
+.shelf-head h1 { margin: 0; font-size: clamp(2.15rem, 5vw, 3.5rem); line-height: 1; }
+.shelf-head button, .simple-toolbar button, .quick-sheet button { min-height: 44px; }
+.count-run {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px;
+  padding: 14px 17px; margin: 0 0 13px; border-radius: 17px; border: 1px solid #5a5079;
+  background: radial-gradient(ellipse at top right,#5c46874d,transparent 70%),#252238;
+}
+.count-run strong, .count-run span { display: block; }
+.count-run strong { font-size: 1rem; }
+.count-run span { margin: 3px 0 6px; color: #d1c9e4; font-size: .76rem; }
+.count-run progress { width: min(100%, 240px); height: 7px; accent-color: #ad9bff; display: block; }
+.count-run .primary { width: auto; min-height: 46px; padding: 10px 14px; font-weight: 700; }
+.simple-toolbar { display: flex; gap: 8px; align-items: center; margin: 0 0 12px; }
+.simple-toolbar .search { flex: 1; min-width: 0; min-height: 44px; }
+.simple-toolbar button { white-space: nowrap; }
+.simple-room {
+  background: radial-gradient(ellipse at top,#3a294e66,transparent 65%),#141322;
+  border-color: #514261; border-radius: 18px; padding: 13px;
+}
+.simple-room .room-header { margin-bottom: 8px; color: #d6cae8; }
+.simple-room .bottle-grid { gap: 12px; }
+.simple-room .bottle-card {
+  overflow: hidden; border: 1px solid #463b57; border-radius: 14px;
+  background: #211c2e; padding: 0 0 10px; text-align: center; min-width: 0;
+}
+.simple-room .bottle-card:is(:focus-visible,:active,.next-bottle) { border-color: #b69aff; box-shadow: inset 0 0 0 1px #ab91ef; }
+@media (hover:hover) { .simple-room .bottle-card:hover { border-color: #b69aff; } }
+.simple-room .bottle-stage { height: auto; min-width: 0; border-radius: 0; aspect-ratio: 1.16; }
+.simple-room .bottle-stage::before { display: none; }
+.bottle-photo {
+  display: block; width: 100%; max-width: 164px; aspect-ratio: 1; flex: 0 0 auto;
+  background-image: url('rox-bottles-v004.webp'); background-repeat: no-repeat;
+  background-size: 300% 200%; background-color: #1b1826; border-radius: 12px;
+}
+.photo-gin { background-position: 0 0; }
+.photo-whiskey { background-position: 50% 0; }
+.photo-rum { background-position: 100% 0; }
+.photo-tequila { background-position: 0 100%; }
+.photo-vermouth { background-position: 50% 100%; }
+.photo-clear { background-position: 100% 100%; }
+.simple-room .bottle-photo { max-width: 100%; border-radius: 0; transition: transform .2s ease; }
+.simple-room .bottle-card:active .bottle-photo { transform: rotate(-3deg) scale(1.025); }
+.simple-room .bottle-card:focus-visible .bottle-stage { box-shadow: none; }
+.simple-room .bottle-status { z-index: 2; inset: 5px 5px auto auto; font-size: .6rem; background: #302247; }
+.simple-room .shelf-plank { height: 3px; margin: 0 4px 7px; background: #514061; border-top-color: #bc96f0; }
+.simple-room .bottle-name { display: block; padding: 0 4px; font-size: clamp(.69rem,2.8vw,.93rem); line-height: 1.18; }
+.simple-room .bottle-quantity { margin-top: 5px; font-size: clamp(.67rem,2.75vw,1rem); color: #ffe0ae; font-weight: 750; }
+.bottle-quantity small { display: block; margin-top: 3px; color: #c0b6d1; font-size: .62rem; font-weight: 500; }
+.simple-room .bottle-list { grid-template-columns: 1fr; gap: 8px; }
+.simple-room .bottle-list .bottle-card { display: grid; grid-template-columns: 53px 1fr auto; align-items: center; text-align: left; gap: 8px; padding: 5px 8px; }
+.bottle-list .bottle-stage { overflow: hidden; aspect-ratio: 1; border-radius: 9px; }
+.bottle-list .bottle-status, .bottle-list .shelf-plank { display: none; }
+.bottle-list .bottle-quantity { margin: 0; text-align: right; }
+.product-portrait .bottle-photo { max-width: 115px; }
+.mini-bottle .bottle-photo { width: 100%; }
+.quick-sheet .quick-product { margin-bottom: 12px; }
+.quick-sheet .product-portrait { min-width: 78px; }
+.quick-field { display: grid; gap: 6px; margin-bottom: 11px; }
+.quick-field label { font-size: .93rem; font-weight: 650; }
+.stepper, .open-volume { display: grid; gap: 8px; grid-template-columns: 48px minmax(0,1fr) 48px; }
+.open-volume { grid-template-columns: minmax(0,1fr) auto; }
+.quick-sheet .quick-field button, .quick-field input, .count-note textarea {
+  min-height: 46px; padding: 8px 11px; background: #24233a; color: #fff;
+  border: 1px solid #655986; border-radius: 11px; font: inherit;
+}
+.quick-field input { min-width: 0; width: 100%; font-size: 1.16rem; text-align: center; }
+.stepper button { font-size: 1.25rem !important; }
+.count-note { margin: 8px 0; color: #d5cae8; font-size: .8rem; }
+.count-note summary { cursor: pointer; padding: 5px 0; }
+.count-note textarea { width: 100%; min-height: 55px; }
+.quick-sheet #form-error:empty { display: none; }
+.quick-sheet #count-form .primary { margin-top: 4px; min-height: 48px; }
+.bottom-nav button[hidden] { display: none; }
+.bottom-nav button { min-height: 44px; }
+@media(max-width:700px) {
+  .topbar { height: 59px; }
+  .simple-room .bottle-grid:not(.bottle-list) { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; }
+  .simple-room { padding: 9px; margin-inline: -3px; }
+  .count-run { padding: 12px; gap: 8px; }
+  .count-run .primary { font-size: .77rem; padding-inline: 9px; }
+  .quick-sheet .sheet-inner { padding: 12px 18px 18px; }
+  .quick-sheet .sheet-top { margin-bottom: 5px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .simple-room .bottle-photo { transition: none; }
+  .simple-room .bottle-card:active .bottle-photo { transform: none; }
+}

@@ -138,17 +138,17 @@ export function createShiftView({ main, heading, getRole, render, toast }) {
           <span class="shift-chip">${phases[shift.phase]}</span></div>
         ${manager && shift.hours < 8 ? '<button class="small-button" data-shift-hour>Ещё час смены →</button>' : ''}
       </section>
-      <section class="shift-metrics" aria-label="Касса и выплаты">
+      ${role === 'bartender' ? `<section class="shift-panel own-wage"><span class="eyebrow">МОЯ СМЕНА</span>
+        <h2>${money(payDue(shift, STAFF[0]))} к выплате</h2><p class="shift-help">Начислено за ${shift.hours} ч · учебный пример.</p></section>` : `<section class="shift-metrics" aria-label="Касса и выплаты">
         <div><span>Наличными в кассе</span><strong>${money(shift.cash)}</strong><small>Старт ${money(OPENING_CASH)} + 1 200 ₽ первых продаж</small></div>
         <div><span>Оплаты картой</span><strong>${money(shift.card)}</strong><small>По закрытым счетам</small></div>
         <div><span>Доступно к выплатам</span><strong>${money(cashForPay(shift))}</strong><small>После резерва ${money(CASH_RESERVE)}</small></div>
-      </section>
+      </section>`}
       <div class="shift-columns">
         <section class="shift-panel"><h2>Счета гостей</h2><p class="shift-help">Отметьте, как гость оплатил счёт. Сумма сразу попадёт в нужную колонку.</p>
           ${billRows(bartender)}</section>
-        <section class="shift-panel"><h2>Выплаты к этому часу</h2><p class="shift-help">Осталось выдать ${money(unpaid)}. Часы и ставки в этом примере условные.</p>
-          ${wageRows(manager)}
-          ${bartender && !manager ? '<button class="small-button" data-role="manager">Открыть режим управляющего</button>' : ''}</section>
+        ${role === 'bartender' ? '' : `<section class="shift-panel"><h2>Выплаты к этому часу</h2><p class="shift-help">Осталось выдать ${money(unpaid)}. Часы и ставки в этом примере условные.</p>
+          ${wageRows(manager)}</section>`}
       </div>
       ${manager ? `<details class="shift-panel"><summary>Движение наличных</summary>
         <form data-shift-form="movement" class="shift-form">
@@ -157,12 +157,12 @@ export function createShiftView({ main, heading, getRole, render, toast }) {
           <label>За что<input name="note" maxlength="240" required placeholder="Например, размен"></label>
           <button type="submit" class="small-button">Добавить в журнал</button><p class="shift-form-error" role="alert"></p>
         </form></details>` : ''}
-      <section class="shift-panel"><h2>${manager ? 'Закрытие смены' : 'Отчёт смены'}</h2>
+      ${role === 'bartender' ? '' : `<section class="shift-panel"><h2>${manager ? 'Закрытие смены' : 'Отчёт смены'}</h2>
         ${manager ? closureForm() : reportMarkup() + reviewForm()}</section>
-      <section class="shift-panel"><h2>Журнал смены</h2>
+      <details class="shift-panel"><summary>Журнал смены</summary>
         ${shift.events.length ? `<ol class="shift-journal">${shift.events.slice(-12).reverse().map(journalRow).join('')}</ol>`
           : '<p class="shift-help">Закрытия счетов, выплаты и проверки появятся здесь.</p>'}
-      </section>
+      </details>`}
       <div class="section-bottom"><p>Учебные операции сохраняются в этом браузере.</p>
         <button class="quiet-button" data-action="reset">Начать демо заново</button></div>`;
   }
