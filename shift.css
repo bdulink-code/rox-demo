@@ -1,0 +1,90 @@
+.role-switch { flex-wrap: wrap; justify-content: center; }
+.role-switch button { padding-inline: 11px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.hero-link.accent-link { background: #5a57ec; border-color: #a09fff; color: white; }
+.bottle-stage { perspective: 450px; border-radius: 15px; }
+.bottle-card .bottle-art { transition: transform .28s, filter .28s; }
+.bottle-card:focus-visible .bottle-stage { box-shadow: inset 0 0 0 1px #9f9aff, inset 0 0 24px #685aff40; }
+.bottle-card:active .bottle-art { transform: rotateY(-11deg) rotateZ(4deg) translateY(-5px); }
+@media (hover: hover) {
+  .bottle-card:hover .bottle-stage { box-shadow: inset 0 0 0 1px #9f9aff, inset 0 0 24px #685aff40; }
+  .bottle-card:hover .bottle-art { transform: rotateY(-12deg) rotateZ(4deg) translateY(-5px); filter: drop-shadow(0 4px 13px #7a6aff55); }
+}
+.bottle-liquid { transform-box: fill-box; transform-origin: center; }
+.bottle-card:is(:hover,:focus-visible,:active) .bottle-liquid,
+.product-portrait .bottle-liquid { animation: liquid-tilt .8s ease-in-out both; }
+@keyframes liquid-tilt {
+  0%, 100% { transform: rotate(0); }
+  32% { transform: rotate(-10deg); }
+  68% { transform: rotate(5deg); }
+}
+.bottle-quantity { display: block; color: #c1bddc; font-size: .67rem; margin-top: 5px; line-height: 1.2; }
+.shift-banner, .shift-panel, .tour-card {
+  padding: clamp(16px, 3vw, 26px);
+  background: #1a1e2f;
+  border: 1px solid #373c58;
+  border-radius: 20px;
+  margin: 0 0 16px;
+}
+.shift-banner {
+  display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: radial-gradient(ellipse at top right,#5146b855,transparent 75%),#222438;
+}
+.shift-banner h2 { font-size: clamp(2rem, 5vw, 3rem); margin: 5px 0 8px; font-variant-numeric: tabular-nums; }
+.shift-banner h2 small { font-size: .85rem; color: #cac9e3; font-weight: 500; }
+.shift-chip { display: inline-block; color: #a0eccb; background: #153b33; border-radius: 8px; padding: 5px 8px; font-size: .74rem; }
+.shift-chip.warning { background: #493226; color: #ffd3ab; }
+.shift-metrics, .shift-columns, .shift-fields, .shift-report { display: grid; gap: 12px; }
+.shift-metrics { grid-template-columns: repeat(3,minmax(0,1fr)); margin: 0 0 16px; }
+.shift-metrics div, .shift-report div { padding: 13px; border: 1px solid #3e4161; background: #23273d; border-radius: 13px; }
+.shift-metrics span, .shift-report span { display: block; color: #c1c5dd; font-size: .75rem; }
+.shift-metrics strong, .shift-report strong { display: block; font-size: clamp(1rem,3vw,1.65rem); margin: 5px 0 3px; }
+.shift-metrics small, .shift-report small, .shift-row small, .shift-journal small {
+  display: block; color: #b1b6cf; font-size: .74rem; line-height: 1.35; margin-top: 3px;
+}
+.shift-columns, .shift-fields, .shift-report { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.shift-panel h2 { font-size: 1.13rem; margin: 0 0 9px; }
+.shift-help, .shift-note { color: #c5c8df; font-size: .86rem; line-height: 1.5; margin: 5px 0 11px; }
+.shift-note { grid-column: 1 / -1; overflow-wrap: anywhere; }
+.shift-row { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 12px 0; border-top: 1px solid #363a52; }
+.shift-row > :nth-child(3) { grid-column: 1 / -1; justify-self: start; }
+.shift-actions, .shift-owner-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.shift-owner-head { justify-content: space-between; }
+.shift-actions .primary { width: auto; padding: 11px 16px; }
+.shift-actions button:disabled { opacity: .45; cursor: default; }
+.shift-form { display: grid; gap: 11px; margin-top: 12px; }
+.shift-form label { display: grid; gap: 5px; color: #e6e5f8; font-size: .85rem; }
+.shift-form input:not([type=checkbox]), .shift-form select {
+  width: 100%; min-width: 0; padding: 10px 11px; background: #14182b; color: #fff;
+  border: 1px solid #565c83; border-radius: 9px; font: inherit;
+}
+.shift-checks { display: grid; gap: 8px; }
+.shift-checks label { display: flex; align-items: center; gap: 8px; }
+.shift-checks input { accent-color: #726bff; width: 17px; height: 17px; }
+.shift-form-error { margin: 0; color: #ffb399; font-size: .82rem; }
+.shift-form-error:empty { display: none; }
+.shift-panel summary { cursor: pointer; font-weight: 650; }
+.shift-journal { list-style: none; padding: 0; margin: 0; }
+.shift-journal li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px solid #393d55; }
+.shift-journal li div { min-width: 0; overflow-wrap: anywhere; }
+.shift-journal time { color: #b1b6cf; font-size: .77rem; }
+.tour-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 14px; align-items: start; }
+.tour-card h2 { margin: 8px 0; font-size: 1.2rem; }
+.tour-card p { line-height: 1.55; color: #c1c5dd; }
+.tour-card img, .tour-card video { width: 100%; display: block; border-radius: 14px; }
+.tour-card .primary { width: auto; padding: 11px 16px; }
+.tour-step { color: #a8a5fb; font-size: .72rem; letter-spacing: .13em; }
+@media (max-width: 700px) {
+  .role-switch button { padding-inline: 8px; }
+  .shift-columns, .tour-grid { grid-template-columns: minmax(0,1fr); }
+  .shift-metrics { gap: 5px; }
+  .shift-metrics div { padding: 9px 7px; }
+  .shift-metrics small { font-size: .66rem; }
+  .bottom-nav button { font-size: .62rem; }
+  .bottle-quantity { font-size: .59rem; }
+}
+@media (max-width: 360px) { .shift-fields { grid-template-columns: minmax(0,1fr); } }
+@media (prefers-reduced-motion: reduce) {
+  .bottle-card .bottle-art { transition: none; }
+  .bottle-card .bottle-liquid, .product-portrait .bottle-liquid { animation: none !important; }
+}
