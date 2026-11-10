@@ -16,10 +16,12 @@ function toast(text){clearTimeout(toastTimer);$('#toast').textContent=text;$('#t
 const roleNames = { bartender: 'Бармен', manager: 'Управляющий', owner: 'Владелец' };
 let countRun = loadRun(state.counts), listView = false, guided = false;
 const shiftView = createShiftView({main, heading, getRole: () => role, render, toast});
-const bottleCategories = { 'Джин': 'gin', 'Виски': 'whiskey', 'Ром': 'rum', 'Текила': 'tequila', 'Вермут': 'vermouth' };
+const bottleSlots = new Map(products.map((product, index) => [product.id, index]));
 function bottle(p){
-  const category = bottleCategories[p.kind] ?? 'clear';
-  return `<span class="bottle-photo photo-${category}" aria-hidden="true"></span>`;
+  const slot = bottleSlots.get(p.id);
+  const x = (slot % 6) * 20;
+  const y = Math.floor(slot / 6) * 50;
+  return `<span class="bottle-photo" style="--sprite-x:${x}%;--sprite-y:${y}%" aria-hidden="true"></span>`;
 }
 
 function chooseMode(){
@@ -64,9 +66,12 @@ function setView(v){view=v;if(v==='owner')role='owner';render();window.scrollTo(
 function renderShelf(){
   const {done,next}=runProgress(countRun,state.counts,products);
   const label = !countRun ? 'Начать пересчёт' : next ? 'Продолжить пересчёт' : 'Пересчитать заново';
-  main.innerHTML=`<section class="shelf-head">
+  main.innerHTML=`<section class="shelf-head rox-night-hero">
     <div><p class="eyebrow">ROX / ОСНОВНОЙ БАР</p><h1>Полка</h1></div>
-    <button class="small-button" data-view="shift">К смене →</button>
+    <div class="rox-night-actions">
+      <a class="small-button" href="./3d.html">3D-полка ↗</a>
+      <button class="small-button" data-view="shift">К смене →</button>
+    </div>
   </section>
   <section class="count-run" aria-label="Пересчёт полки">
     <div><strong>${countRun && !next ? 'Полка пересчитана' : 'Пересчёт полки'}</strong>
@@ -83,7 +88,7 @@ function renderShelf(){
     <div class="room-header"><span>НАЖМИТЕ НА БУТЫЛКУ</span><span id="result-count"></span></div>
     <div class="bottle-grid${listView?' bottle-list':''}" id="bottles"></div>
   </section>
-  <div class="shelf-note"><span>Демо. Изображения условные, название на карточке.</span><button class="small-button" data-view="menu">Меню ROX</button></div>`;
+  <div class="shelf-note"><span>Учебные остатки · этикетки по мотивам оригиналов.</span><button class="small-button" data-view="menu">Меню ROX</button></div>`;
   renderBottles();
 }
 
@@ -228,7 +233,7 @@ sheet.addEventListener('submit',event=>{
   }
 });
 
-function showInfo(reset=false){info.innerHTML=reset?`<div class="info-body"><div class="sheet-top"><h2 id="info-title">Начать демо заново?</h2><button class="close" data-info-close aria-label="Закрыть">×</button></div><p>В этом браузере восстановятся стартовые остатки и учебная смена.</p><button class="primary" data-confirm-reset>Восстановить демоданные</button><button class="small-button" data-info-close>Продолжить работу</button></div>`:`<div class="info-body"><div class="sheet-top"><h2 id="info-title">ROX. Своя полка.</h2><button class="close" data-info-close aria-label="Закрыть">×</button></div><p>Демо для бармена, управляющего и владельца. На экране «Смена» можно закрыть учебные счета, отметить выплаты и передать кассу на проверку. Названия взяты с двух фотографий меню ROX в 2ГИС. Остатки, объёмы бутылок и закупочные цены демонстрационные. iiko не подключена.</p><p>Выберите бутылку, введите фактический остаток и откройте «Контроль». Для первой пробы: у Barrister введите 4 закрытые бутылки и 200 мл в открытых. Получится 3 л и расхождение −120 мл.</p><p>Роли здесь переключаются свободно — это демонстрация интерфейсов, не система доступа. Пересчёты остаются в текущем браузере; на другом телефоне или после очистки данных их не будет.</p><p>Обложка создана AI по мотивам оформления. Это не фотография бара. Рисунки бутылок условные, без копирования фирменной упаковки.</p><p>Уровень жидкости на полке — иллюстрация. Точное учётное количество подписано под бутылкой.</p><button class="primary" data-info-close>Посмотреть полку →</button></div>`;info.showModal();}
+function showInfo(reset=false){info.innerHTML=reset?`<div class="info-body"><div class="sheet-top"><h2 id="info-title">Начать демо заново?</h2><button class="close" data-info-close aria-label="Закрыть">×</button></div><p>В этом браузере восстановятся стартовые остатки и учебная смена.</p><button class="primary" data-confirm-reset>Восстановить демоданные</button><button class="small-button" data-info-close>Продолжить работу</button></div>`:`<div class="info-body"><div class="sheet-top"><h2 id="info-title">ROX. Своя полка.</h2><button class="close" data-info-close aria-label="Закрыть">×</button></div><p>Демо для бармена, управляющего и владельца. На экране «Смена» можно закрыть учебные счета, отметить выплаты и передать кассу на проверку. Названия взяты с двух фотографий меню ROX в 2ГИС. Остатки, объёмы бутылок и закупочные цены демонстрационные. iiko не подключена.</p><p>Выберите бутылку, введите фактический остаток и откройте «Контроль». Для первой пробы: у Barrister введите 4 закрытые бутылки и 200 мл в открытых. Получится 3 л и расхождение −120 мл.</p><p>Роли здесь переключаются свободно — это демонстрация интерфейсов, не система доступа. Пересчёты остаются в текущем браузере; на другом телефоне или после очистки данных их не будет.</p><p>Интерьер — иллюстрация по мотивам оформления ROX. Этикетки сгенерированы по мотивам оригинальных упаковок.</p><p>Точный остаток доступен в карточке бутылки.</p><button class="primary" data-info-close>Посмотреть полку →</button></div>`;info.showModal();}
 info.addEventListener('click',e=>{if(e.target.closest('[data-info-close]'))info.close();if(e.target.closest('[data-confirm-reset]')){state=freshState();countRun=null;saveRun(null);const stockSaved=persist();const shiftSaved=shiftView.reset();const saved=stockSaved&&shiftSaved;info.close();render();toast(saved?'Демо восстановлено. Можно попробовать снова.':'Демо сброшено в памяти; сохранение в браузер недоступно.');}});
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.view)setView(b.dataset.view);if(b.dataset.role)chooseRole(b.dataset.role);if(b.dataset.category){category=b.dataset.category;renderShelf();nav();}if(b.dataset.product)openProduct(b.dataset.product);if(b.dataset.ownerFilter){ownerFilter=b.dataset.ownerFilter;renderOwner();nav();}if(b.dataset.review){const c=state.counts.find(c=>c.id===b.dataset.review);if(c&&!c.reviewed){c.reviewed=true;c.reviewedAt=new Date().toISOString();const saved=persist();render();toast(saved?'Проверка отмечена. Учётный остаток не изменён.':'Отметка в памяти; сохранение недоступно.');}}if(b.dataset.action==='low'){category='Заканчивается';query='';setView('shelf');}if(b.dataset.action==='control')setView('owner');if(b.dataset.action==='shelf')setView('shelf');if(b.dataset.action==='reset')showInfo(true);
   if(b.dataset.action==='sample-count')openSampleCount();
@@ -256,7 +261,7 @@ function openSampleCount(){
 function renderMedia(){
   main.innerHTML = heading('Попробовать ROX', 'От бутылки на полке до проверенной смены.', 'ROX / ПОКАЗ')
     + `<div class="tour-grid">
-      <figure class="tour-card"><img src="rox-night-v002.png" alt="Иллюстрация ночного бара ROX">
+      <figure class="tour-card"><img src="rox-room-v005.webp" alt="Иллюстрация ночного бара ROX">
         <figcaption><h2>Бар как в игре</h2><p>Визуальный концепт, созданный ИИ.</p></figcaption>
       </figure>
       <section>
